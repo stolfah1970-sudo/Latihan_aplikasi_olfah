@@ -1,19 +1,19 @@
-# 🎈 Blank app template
+import streamlit as st
+import pandas as pd
+import pickle
 
-A simple Streamlit app template for you to modify!
+st.title("Dashboard Analitik DJPb")
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+# Sidebar Filter
+st.sidebar.header("Menu Filter")
+opsi = st.sidebar.selectbox("Pilih Model:", ["Klasifikasi", "Regresi"])
 
-### How to run it on your own machine
+# Load Model & Data
+model = pickle.load(open("models/model.pkl", "rb"))
+data = pd.read_csv("data/dataset.csv")
+st.dataframe(data.head())
 
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+# Prediksi
+if st.button("Jalankan Prediksi"):
+ st.success("Prediksi berhasil!")
+ st.write(model.predict(data))
